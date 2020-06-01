@@ -1,0 +1,91 @@
+version: '3'
+
+services:
+  traefik:
+    image: traefik:v2.0
+    container_name: traefik
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    networks:
+      - hydrogen
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./data/traefik.yml:/traefik.yml:ro
+      - ./data/acme.json:/acme.json
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.traefik.entrypoints=http"
+      - "traefik.http.routers.traefik.rule=Host(`traefik.codeassist.io`)"
+      - "traefik.http.middlewares.traefik-auth.basicauth.users=julien:$$apr1$$wDeV1Jr9$$dIQWjXeZzniVt1/PMulaA1"
+      - "traefik.http.routers.traefik-secure.entrypoints=https"
+      - "traefik.http.routers.traefik-secure.rule=Host(`traefik.codeassist.io`)"
+      - "traefik.http.routers.traefik-secure.middlewares=traefik-auth"
+      - "traefik.http.routers.traefik-secure.tls=true"
+      - "traefik.http.routers.traefik-secure.tls.certresolver=http"
+      - "traefik.http.routers.traefik-secure.service=api@internal"
+  portainer:
+    image: portainer/portainer:latest
+    container_name: portainer
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    networks:
+      - hydrogen
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./data:/data
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.portainer.entrypoints=http"
+      - "traefik.http.routers.portainer.rule=Host(`portainer.codeassist.io`)"
+      - "traefik.http.routers.portainer-secure.entrypoints=https"
+      - "traefik.http.routers.portainer-secure.rule=Host(`portainer.codeassist.io`)"
+      - "traefik.http.routers.portainer-secure.tls=true"
+      - "traefik.http.routers.portainer-secure.tls.certresolver=http"
+      - "traefik.http.routers.portainer-secure.service=portainer"
+      - "traefik.http.services.portainer.loadbalancer.server.port=9000"
+      - "traefik.docker.network=hydrogen"
+  gitlab:
+    image: 'gitlab/gitlab-ce:latest'
+    container_name: gitlab
+    restart: always
+    hostname: 'gitlab.codeassist.io'
+    environment:
+      GITLAB_OMNIBUS_CONFIG: |
+        external_url 'https://gitlab.codeassist.io'
+        nginx['listen_https'] = false
+        nginx['listen_port'] = 80
+        gitlab_rails['backup_upload_remote_directory'] = 's3-backup-bucket'
+        gitlab_rails['gitlab_shell_ssh_port'] = 22
+    volumes:
+      - gitlab-config:/etc/gitlab
+      - gitlab-logs:/var/log/gitlab
+      - gitlab-data:/var/opt/gitlab
+    networks:
+      - hydrogen
+      - default
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.gitlab.entrypoints=http"
+      - "traefik.http.routers.gitlab.rule=Host(`gitlab.codeassist.io`)"
+      - "traefik.http.routers.gitlab-secure.entrypoints=https"
+      - "traefik.http.routers.gitlab-secure.rule=Host(`gitlab.codeassist.io`)"
+      - "traefik.http.routers.gitlab-secure.tls=true"
+      - "traefik.http.routers.gitlab-secure.tls.certresolver=http"
+      - "traefik.http.routers.gitlab-secure.service=gitlab"
+      - "traefik.http.services.gitlab.loadbalancer.server.port=80"
+      - "traefik.docker.network=hydrogen"
+networks:
+  hydrogen:
+    external: true
+
+volumes:
+  gitlab-config:
+  gitlab-logs:
+  gitlab-data:
