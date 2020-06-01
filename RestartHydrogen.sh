@@ -1,5 +1,4 @@
 #!/bin/bash
 figlet "Hydrogen"
-sudo docker-compose down --remove-orphans
-sudo docker-compose up -d
+sudo docker-compose restart
 exit 0
