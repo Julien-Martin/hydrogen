@@ -2,7 +2,7 @@ version: '3'
 
 services:
   traefik:
-    image: traefik:v2.0
+    image: traefik:v2.2.1
     container_name: traefik
     restart: unless-stopped
     security_opt:
@@ -28,6 +28,7 @@ services:
       - "traefik.http.routers.traefik-secure.tls=true"
       - "traefik.http.routers.traefik-secure.tls.certresolver=http"
       - "traefik.http.routers.traefik-secure.service=api@internal"
+      - "traefik.http.routers.api.rule=PathPrefix(`/dashboard`) || PathPrefix(`/api`)"
   portainer:
     image: portainer/portainer:latest
     container_name: portainer
@@ -51,7 +52,7 @@ services:
       - "traefik.http.routers.portainer-secure.service=portainer"
       - "traefik.http.services.portainer.loadbalancer.server.port=9000"
       - "traefik.docker.network=hydrogen"
-  gitlab:
+ gitlab:
     image: 'gitlab/gitlab-ce:latest'
     container_name: gitlab
     restart: always
