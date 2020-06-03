@@ -11,6 +11,9 @@ defaultEntryPoints = ["https","http"]
 
 [retry]
 
+[api]
+dashboard = true
+
 [docker]
 endpoint = "unix:///var/run/docker.sock"
 domain = "codeassist.io"
