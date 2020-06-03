@@ -52,36 +52,36 @@ services:
       - "traefik.http.routers.portainer-secure.service=portainer"
       - "traefik.http.services.portainer.loadbalancer.server.port=9000"
       - "traefik.docker.network=hydrogen"
- gitlab:
-    image: 'gitlab/gitlab-ce:latest'
-    container_name: gitlab
-    restart: always
-    hostname: 'gitlab.codeassist.io'
-    environment:
-      GITLAB_OMNIBUS_CONFIG: |
-        external_url 'https://gitlab.codeassist.io'
-        nginx['listen_https'] = false
-        nginx['listen_port'] = 80
-        gitlab_rails['backup_upload_remote_directory'] = 's3-backup-bucket'
-        gitlab_rails['gitlab_shell_ssh_port'] = 22
-    volumes:
-      - gitlab-config:/etc/gitlab
-      - gitlab-logs:/var/log/gitlab
-      - gitlab-data:/var/opt/gitlab
-    networks:
-      - hydrogen
-      - default
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.gitlab.entrypoints=http"
-      - "traefik.http.routers.gitlab.rule=Host(`gitlab.codeassist.io`)"
-      - "traefik.http.routers.gitlab-secure.entrypoints=https"
-      - "traefik.http.routers.gitlab-secure.rule=Host(`gitlab.codeassist.io`)"
-      - "traefik.http.routers.gitlab-secure.tls=true"
-      - "traefik.http.routers.gitlab-secure.tls.certresolver=http"
-      - "traefik.http.routers.gitlab-secure.service=gitlab"
-      - "traefik.http.services.gitlab.loadbalancer.server.port=80"
-      - "traefik.docker.network=hydrogen"
+    gitlab:
+        image: 'gitlab/gitlab-ce:latest'
+        container_name: gitlab
+        restart: always
+        hostname: 'gitlab.codeassist.io'
+        environment:
+          GITLAB_OMNIBUS_CONFIG: |
+            external_url 'https://gitlab.codeassist.io'
+            nginx['listen_https'] = false
+            nginx['listen_port'] = 80
+            gitlab_rails['backup_upload_remote_directory'] = 's3-backup-bucket'
+            gitlab_rails['gitlab_shell_ssh_port'] = 22
+        volumes:
+          - gitlab-config:/etc/gitlab
+          - gitlab-logs:/var/log/gitlab
+          - gitlab-data:/var/opt/gitlab
+        networks:
+          - hydrogen
+          - default
+        labels:
+          - "traefik.enable=true"
+          - "traefik.http.routers.gitlab.entrypoints=http"
+          - "traefik.http.routers.gitlab.rule=Host(`gitlab.codeassist.io`)"
+          - "traefik.http.routers.gitlab-secure.entrypoints=https"
+          - "traefik.http.routers.gitlab-secure.rule=Host(`gitlab.codeassist.io`)"
+          - "traefik.http.routers.gitlab-secure.tls=true"
+          - "traefik.http.routers.gitlab-secure.tls.certresolver=http"
+          - "traefik.http.routers.gitlab-secure.service=gitlab"
+          - "traefik.http.services.gitlab.loadbalancer.server.port=80"
+          - "traefik.docker.network=hydrogen"
 networks:
   hydrogen:
     external: true
