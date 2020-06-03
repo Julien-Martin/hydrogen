@@ -1,4 +1,5 @@
 #!/bin/bash
-figlet "Hydrogen"
+figlet "Gitlab"
+cd $PWD/gitlab
 sudo docker-compose restart
 exit 0
