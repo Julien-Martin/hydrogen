@@ -20,17 +20,13 @@ services:
       - traefik.enable=true
       - traefik.http.routers.traefik.entrypoints=http
       - traefik.http.routers.traefik.rule=Host(`traefik.codeassist.io`)
-      - >-
-        traefik.http.middlewares.traefik-auth.basicauth.users=julien:$$apr1$$wDeV1Jr9$$dIQWjXeZzniVt1/PMulaA1
+      - traefik.http.middlewares.traefik-auth.basicauth.users=julien:$$apr1$$wDeV1Jr9$$dIQWjXeZzniVt1/PMulaA1
       - traefik.http.routers.traefik-secure.entrypoints=https
       - traefik.http.routers.traefik-secure.rule=Host(`traefik.codeassist.io`)
       - traefik.http.routers.traefik-secure.middlewares=traefik-auth
       - traefik.http.routers.traefik-secure.tls=true
       - traefik.http.routers.traefik-secure.tls.certresolver=http
       - traefik.http.routers.traefik-secure.service=api@internal
-      - >-
-        traefik.http.routers.api.rule=PathPrefix(`/dashboard`) ||
-        PathPrefix(`/api`)
   portainer:
     image: 'portainer/portainer:latest'
     container_name: portainer
