@@ -31,7 +31,7 @@
     [tcp.routers]
         [tcp.routers.mongo]
             entryPoint = ["mongo-port"]
-            rule = "HostSNI('portfolio.codeassist.io')"
+            rule = "HostSNI('*')"
             service = "database"
 
 [certificatesResolvers.letsencrypt.acme]
