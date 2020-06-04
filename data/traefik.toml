@@ -21,3 +21,9 @@
         address = ":2222"
     [entryPoints.mongo]
         address = ":27017"
+
+[certificatesResolvers.letsencrypt.acme]
+    email = "support@codeassist.io"
+    storage = "acme.json"
+    [certificatesResolvers.letsencrypt.acme.httpChallenge]
+        entryPoint = "http"

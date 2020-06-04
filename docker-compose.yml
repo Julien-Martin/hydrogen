@@ -21,6 +21,7 @@ services:
       - traefik.http.routers.traefik.entrypoints=http
       - traefik.http.routers.traefik.rule=Host(`traefik.codeassist.io`)
       - traefik.http.middlewares.traefik-auth.basicauth.users=julien:$$apr1$$wDeV1Jr9$$dIQWjXeZzniVt1/PMulaA1
+      - traefik.http.routers.traefik.service=api@internal
   portainer:
     image: 'portainer/portainer:latest'
     container_name: portainer
