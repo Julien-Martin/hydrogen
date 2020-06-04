@@ -8,7 +8,7 @@
         watch = true
         exposedByDefault = false
     [providers.file]
-        filename = "./data/traefik_dynamic.toml"
+        filename = "/traefik_dynamic.toml"
         watch = true
 
 [api]
