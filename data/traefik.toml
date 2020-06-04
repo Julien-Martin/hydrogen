@@ -27,13 +27,6 @@
     [entryPoints.mongo-port]
         address = ":27017"
 
-[tcp]
-    [tcp.routers]
-        [tcp.routers.mongo]
-            entryPoint = ["mongo-port"]
-            rule = "HostSNI('*')"
-            service = "database"
-
 [certificatesResolvers.letsencrypt.acme]
     email = "support@codeassist.io"
     storage = "acme.json"
