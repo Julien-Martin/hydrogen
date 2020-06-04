@@ -1,1 +1,8 @@
 .idea
+data/bin
+data/compose
+data/config.json
+data/portainer.db
+data/portainer.key
+data/portainer.pub
+data/tls
