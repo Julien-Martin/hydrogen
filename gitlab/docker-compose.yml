@@ -23,11 +23,6 @@ services:
       - traefik.enable=true
       - traefik.http.routers.gitlab.entrypoints=http
       - traefik.http.routers.gitlab.rule=Host(`gitlab.codeassist.io`)
-      - traefik.http.routers.gitlab-secure.entrypoints=https
-      - traefik.http.routers.gitlab-secure.rule=Host(`gitlab.codeassist.io`)
-      - traefik.http.routers.gitlab-secure.tls=true
-      - traefik.http.routers.gitlab-secure.tls.certresolver=letsencrypt
-      - traefik.http.routers.gitlab-secure.service=gitlab
       - traefik.http.services.gitlab.loadbalancer.server.port=80
       - traefik.docker.network=hydrogen
 networks:
