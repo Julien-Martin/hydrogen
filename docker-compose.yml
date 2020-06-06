@@ -24,7 +24,7 @@ services:
       - traefik.http.middlewares.traefik-auth.basicauth.users=julien:$$apr1$$wDeV1Jr9$$dIQWjXeZzniVt1/PMulaA1
       - traefik.http.routers.traefik.service=api@internal
       - traefik.http.routers.traefik-secure.entrypoints=https
-      - traefik.http.routers.traefik-secure.rule=Host(`portainer.codeassist.io`)
+      - traefik.http.routers.traefik-secure.rule=Host(`traefik.codeassist.io`)
       - traefik.http.routers.traefik-secure.tls=true
       - traefik.http.routers.traefik-secure.tls.certresolver=letsencrypt
       - traefik.http.routers.traefik-secure.service=traefik
