@@ -1,6 +1,30 @@
+[api]
+    dashboard = true
+    debug = false
+
 [global]
     checkNewVersion = true
     sendAnonymousUsage = false
+
+[entryPoints]
+    [entryPoints.http]
+        address = ":80"
+        [entryPoints.http.http]
+            [entryPoints.http.http.redirections]
+                [entryPoints.http.http.redirections.entryPoint]
+                    to = "https"
+                    scheme = "https"
+                    permanent = true
+    [entryPoints.https]
+        address = ":443"
+        [entryPoints.https.http.tls]
+            certResolver = "letsencrypt"
+    [entryPoints.ssh]
+        address = ":2222"
+    [entryPoints.mongo]
+        address = ":27017"
+    [entryPoints.mysql]
+        address = ":3306"
 
 [providers]
     [providers.docker]
@@ -11,24 +35,10 @@
         filename = "/traefik_dynamic.toml"
         watch = true
 
-[api]
-    dashboard = true
-    debug = false
-
-[entryPoints]
-    [entryPoints.http]
-        address = ":80"
-    [entryPoints.https]
-        address = ":443"
-    [entryPoints.ssh]
-        address = ":2222"
-    [entryPoints.mongo]
-        address = ":27017"
-    [entryPoints.mysql]
-        address = ":3306"
-
-[certificatesResolvers.letsencrypt.acme]
-    email = "support@codeassist.io"
-    storage = "acme.json"
-    [certificatesResolvers.letsencrypt.acme.httpChallenge]
-        entryPoint = "http"
+[certificatesResolvers]
+    [certificatesResolvers.letsencrypt]
+        [certificatesResolvers.letsencrypt.acme]
+            email = "support@codeassist.io"
+            storage = "acme.json"
+            [certificatesResolvers.letsencrypt.acme.httpChallenge]
+                entryPoint = "http"
