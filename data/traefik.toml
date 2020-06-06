@@ -9,16 +9,8 @@
 [entryPoints]
     [entryPoints.http]
         address = ":80"
-        [entryPoints.http.http]
-            [entryPoints.http.http.redirections]
-                [entryPoints.http.http.redirections.entryPoint]
-                    to = "https"
-                    scheme = "https"
-                    permanent = true
     [entryPoints.https]
         address = ":443"
-        [entryPoints.https.http.tls]
-            certResolver = "letsencrypt"
     [entryPoints.ssh]
         address = ":2222"
     [entryPoints.mongo]
@@ -35,10 +27,8 @@
         filename = "/traefik_dynamic.toml"
         watch = true
 
-[certificatesResolvers]
-    [certificatesResolvers.letsencrypt]
-        [certificatesResolvers.letsencrypt.acme]
-            email = "support@codeassist.io"
-            storage = "acme.json"
-            [certificatesResolvers.letsencrypt.acme.httpChallenge]
-                entryPoint = "http"
+[certificatesResolvers.letsencrypt.acme]
+    email = "support@codeassist.io"
+    storage = "acme.json"
+    [certificatesResolvers.letsencrypt.acme.httpChallenge]
+        entryPoint = "http"
