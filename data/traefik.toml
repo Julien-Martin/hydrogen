@@ -24,6 +24,8 @@
         address = ":2222"
     [entryPoints.mongo]
         address = ":27017"
+    [entryPoints.mysql]
+        address = ":3306"
 
 [certificatesResolvers.letsencrypt.acme]
     email = "support@codeassist.io"
