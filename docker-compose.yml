@@ -26,7 +26,7 @@ services:
       - traefik.http.routers.traefik-secure.rule=Host(`traefik.codeassist.io`)
       - traefik.http.routers.traefik-secure.tls=true
       - traefik.http.routers.traefik-secure.tls.certresolver=letsencrypt
-      - traefik.http.routers.traefik-secure.service=api@internal
+      - traefik.http.routers.traefik.service=api@internal
   portainer:
     image: 'portainer/portainer:latest'
     container_name: portainer
