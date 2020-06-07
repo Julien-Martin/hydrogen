@@ -9,12 +9,6 @@
 [entryPoints]
     [entryPoints.http]
         address = ":80"
-        [entryPoints.http.http]
-            [entryPoints.http.http.redirections]
-                [entryPoints.http.http.redirections.entryPoint]
-                    to = "https"
-                    scheme = "https"
-                    permanent = false
     [entryPoints.https]
         address = ":443"
             [entryPoints.https.http.tls]
