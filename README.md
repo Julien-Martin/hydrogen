@@ -1,5 +1,7 @@
 # HYDROGEN v1.0
-![Hydrogen](./Hydrogen-logo.png?raw=true "Hydrogen")
+<p align="center">
+    <img src="./Hydrogen-logo.png" height="192">
+</p>
 * Traefik
 * Portainer
 
